@@ -1,7 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {SCREEN_ROUTER_APP} from '../helper';
+import { navigationRef } from "./navigationService";
+import {SCREEN_ROUTER_APP} from '../helpers';
 
 import Home from '../screen/Home';
 import LogIn from '../screen/LogIn';
@@ -28,7 +29,7 @@ interface mainItem {
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <RootStack.Navigator
         screenOptions={() => ({
           headerShown: false,

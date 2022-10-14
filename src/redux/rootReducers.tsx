@@ -1,8 +1,5 @@
 import {combineReducers} from 'redux';
-import userReducers from './userReducers';
-import configReducer from './configReducer';
-import purchaseReducer from './purchaseReducer';
-import UIReducer from './UIReducer';
+import userReducers from './reducer/userReducers';
 import {
   useSelector as useReduxSelector,
   TypedUseSelectorHook,
@@ -10,9 +7,6 @@ import {
 
 const rootReducers = combineReducers({
   userReducers,
-  configReducer,
-  purchaseReducer,
-  UIReducer,
 });
 
 export const useSelector: TypedUseSelectorHook<
