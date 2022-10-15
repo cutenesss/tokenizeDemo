@@ -1,10 +1,17 @@
-import APISauce, { ApiResponse } from "apisauce";
-export * from './User'
+import {ApiResponse} from 'apisauce';
+export * from './User';
 
 export type IResponse<R> = ApiResponse<R> & {
-    showToast?: boolean;
+  showToast?: boolean;
 };
 
 export type IResponseError = IResponse<unknown> & {
-    message?: string;
+  message?: string;
+};
+
+export type IRequest<P> = {
+  endpoint: string;
+  params?: P;
+  showToast?: boolean;
+  auth?: boolean;
 };

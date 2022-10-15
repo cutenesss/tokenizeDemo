@@ -1,8 +1,7 @@
-const ROOT = "https://api.scrollalifehacks.com";
+export const ROOT = 'https://api.tokenize-dev.com/';
 
-const ROOT_API = ROOT;
 export const URL = {
-  ROOT_API,
-  LOGIN: "/api/auth/login",
+  LOGIN: '/mobile-api/auth/login',
+  MARKET_SUMMARISE: '/public/v1/market/get-summaries',
+  MARKET_HEADER: '/mobile-api/market/getmarkets',
 };
-

@@ -3,3 +3,4 @@ export * from './function';
 export * from './AsyncStorageUtils';
 export * from './scaleDimenstion';
 export * from './colors';
+export * from './fonts';

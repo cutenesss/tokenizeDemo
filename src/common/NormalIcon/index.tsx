@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
 import FastImage, {Source} from 'react-native-fast-image';
 import {moderateScale} from '../../helpers';
 
@@ -13,6 +13,7 @@ interface NormalIconProps {
   borderRadius?: number;
   onPress?: () => void;
   source: Source;
+  customStyle?: StyleProp<ViewStyle>;
 }
 
 const NormalIcon = (props: NormalIconProps) => {
@@ -26,15 +27,19 @@ const NormalIcon = (props: NormalIconProps) => {
     width,
     onPress,
     source,
+    customStyle,
   } = props;
   return (
     <TouchableOpacity
-      style={{
-        marginRight: marginRight || 0,
-        marginBottom: marginBottom || 0,
-        marginLeft: marginLeft || 0,
-        marginTop: marginTop || 0,
-      }}
+      style={[
+        {
+          marginRight: marginRight || 0,
+          marginBottom: marginBottom || 0,
+          marginLeft: marginLeft || 0,
+          marginTop: marginTop || 0,
+        },
+        customStyle,
+      ]}
       onPress={onPress}
       activeOpacity={onPress ? 0.7 : 0}>
       <FastImage
@@ -44,6 +49,7 @@ const NormalIcon = (props: NormalIconProps) => {
           width: width || moderateScale(20),
           borderRadius: borderRadius || moderateScale(6),
         }}
+        resizeMode="contain"
       />
     </TouchableOpacity>
   );

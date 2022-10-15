@@ -9,9 +9,13 @@ import theme from './theme.json';
 import mapping from './mapping.json';
 import configureStore from './src/redux/store';
 import AppNavigator from './src/navigation';
-let sagaMiddleware = createSagaMiddleware();
+import * as i18n from './src/translations';
 
+// config store
+const sagaMiddleware = createSagaMiddleware();
 const store = configureStore(sagaMiddleware);
+// init i18n
+i18n;
 const App = () => {
   return (
     <Provider store={store}>

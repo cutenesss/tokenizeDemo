@@ -1,11 +1,11 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   NavigationContainerRef,
   StackActions,
   NavigationAction,
   CommonActions,
-  DrawerActions
-} from "@react-navigation/native";
+  DrawerActions,
+} from '@react-navigation/native';
 
 export interface NavigationParram<T> {
   route: {
@@ -34,29 +34,27 @@ export function goBack(): void {
   navigationRef.current?.canGoBack && navigationRef.current?.goBack();
 }
 export function toggleDrawer(): void {
-  navigationRef.current?.dispatch(DrawerActions.toggleDrawer())
+  navigationRef.current?.dispatch(DrawerActions.toggleDrawer());
 }
 
-export function closeDrawer( params = {}): void {
-  navigationRef.current?.dispatch(DrawerActions.closeDrawer())
+export function closeDrawer(params = {}): void {
+  navigationRef.current?.dispatch(DrawerActions.closeDrawer());
 }
 
 export function reset(name: string): void {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 0,
-      routes: [{ name }]
-    })
+      routes: [{name}],
+    }),
   );
 }
 
-export function changestack(
-  routes: Array<{ name: string; params?: any }>
-): void {
+export function changestack(routes: Array<{name: string; params?: any}>): void {
   navigationRef.current?.dispatch(
     CommonActions.reset({
       index: 1,
-      routes
-    })
+      routes,
+    }),
   );
 }
