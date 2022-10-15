@@ -1,12 +1,11 @@
-import AsyncStorageUtils from "@src/helpers/AsyncStorageUtils";
-import { USER_ACTION } from "../actions/userAction";
-import { IUser } from "../../../../typings"
-
+import {saveObject, KEY} from '../../../helpers';
+import {USER_ACTION} from '../actions/userAction';
+import {IUser} from '../../../../typings';
 
 type ActionUserReduxT = {
-  payload: IUser
-  type: string
-}
+  payload: IUser;
+  type: string;
+};
 
 const defaultState: IUser = {
   userId: 0,
@@ -21,15 +20,14 @@ const defaultState: IUser = {
   token: '',
 };
 
-
 export default (state = defaultState, action: ActionUserReduxT) => {
   switch (action.type) {
     case USER_ACTION.SET_USER_INFO:
-      AsyncStorageUtils.saveObject(AsyncStorageUtils.KEY.USER_DATA, action.payload)
+      saveObject(KEY.USER_DATA, action.payload);
       state = {
         ...state,
-        ...action.payload
-      }
+        ...action.payload,
+      };
     default:
       break;
   }

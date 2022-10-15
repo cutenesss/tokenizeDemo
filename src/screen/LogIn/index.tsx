@@ -1,12 +1,23 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from 'react';
+import {View, StyleSheet, ImageBackground} from 'react-native';
+import Images from '../../../assets';
+import CustomStatusBar from '../../common/CustomStatusBar';
+import {colors} from '../../helpers';
 
 const LogIn = () => {
   return (
-    <View>
-      <Text>LogIn</Text>
-    </View>
-  )
-}
+    <ImageBackground
+      source={Images.LogInImage.LOG_IN_BACKGROUND}
+      style={styles.container}>
+      <CustomStatusBar barStyle={'light-content'} />
+    </ImageBackground>
+  );
+};
 
-export default LogIn
+export default LogIn;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.colorWhite,
+  },
+});

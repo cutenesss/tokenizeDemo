@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import { navigationRef } from "./navigationService";
+import {navigationRef} from './navigationService';
 import {SCREEN_ROUTER_APP} from '../helpers';
 
 import Home from '../screen/Home';

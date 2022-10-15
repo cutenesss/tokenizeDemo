@@ -1,12 +1,12 @@
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from '@react-native-community/async-storage';
 
 const KEY = {
-  USER_DATA: "USER_DATA",
-  LANGUAGE: "LANGUAGE",
-  INIT_STORAGE: "@INIT_STORAGE",
-  KEY_EXPIRED: "@KEY_EXPIRED",
-  FAVORITE: "@FAVORITE",
-  TOKEN: "@TOKEN"
+  USER_DATA: 'USER_DATA',
+  LANGUAGE: 'LANGUAGE',
+  INIT_STORAGE: '@INIT_STORAGE',
+  KEY_EXPIRED: '@KEY_EXPIRED',
+  FAVORITE: '@FAVORITE',
+  TOKEN: '@TOKEN',
 };
 /**
  * Saves an object to storage.
@@ -64,17 +64,10 @@ async function remove(key: string): Promise<boolean> {
 async function getObject<T>(key: string): Promise<T | null> {
   try {
     const almostThere = await AsyncStorage.getItem(key);
-    return typeof almostThere === "string" ? JSON.parse(almostThere) : null;
+    return typeof almostThere === 'string' ? JSON.parse(almostThere) : null;
   } catch {
     return null;
   }
 }
 
-export {
-  save,
-  saveObject,
-  get,
-  getObject,
-  remove,
-  KEY
-};
+export {save, saveObject, get, getObject, remove, KEY};
