@@ -7,12 +7,14 @@ import * as eva from '@eva-design/eva';
 
 import mapping from './mapping.json';
 import configureStore from './src/redux/store';
+import rootSaga from './src/redux/saga';
 import AppNavigator from './src/navigation';
 import * as i18n from './src/translations';
 
 // config store
 const sagaMiddleware = createSagaMiddleware();
 const store = configureStore(sagaMiddleware);
+sagaMiddleware.run(rootSaga);
 // init i18n
 i18n;
 const App = () => {

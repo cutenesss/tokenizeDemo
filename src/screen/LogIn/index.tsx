@@ -18,6 +18,7 @@ import {
   moderateScale,
   SCREEN_ROUTER_APP,
   showToast,
+  validateEmail,
 } from '../../helpers';
 import styles from './styles';
 
@@ -28,7 +29,7 @@ import NormalInput from '../../common/NormalInput';
 import NormalButton from '../../common/NormalButton';
 import {IBodyLogin, IUser, IRequest} from '../../../typings';
 import {postData, setToken, URL} from '../../apis';
-import {setUserInfo} from '../../redux/reducer/actions/userAction';
+import {setUserInfo, userLogIn} from '../../redux/actions/userAction';
 import {reset} from '../../navigation/navigationService';
 
 const LogIn = () => {
@@ -70,25 +71,14 @@ const LogIn = () => {
   };
 
   const onSignIn = async () => {
-    try {
-      const request: IRequest<IBodyLogin> = {
-        endpoint: URL.LOGIN,
-        params: {
-          email: email.current,
-          password: password.current,
-          captcha: 'yWOEjZMIhY',
-          captchaBypass: 'yWOEjZMIhY',
-        },
-      };
-      const response = await postData<IBodyLogin, {data: IUser}>(request);
-      if (response?.data?.data) {
-        dispatch(setUserInfo(response?.data?.data));
-        showToast('Login with account: ' + response.data?.data?.email);
-        reset(SCREEN_ROUTER_APP.TABHOME);
-        setToken(response.data?.data?.token ?? '');
-      }
-    } catch (error) {
-      // console.log('sssssssssssss', error);
+    if (email.current.trim() === '') {
+      showToast(t('pleaseFillEmail'));
+    } else if (password.current.trim() === '') {
+      showToast(t('pleaseFillPassword'));
+    } else if (!validateEmail(email.current)) {
+      showToast(t('invalidEmail'));
+    } else {
+      dispatch(userLogIn({email: email.current, password: password.current}));
     }
   };
 

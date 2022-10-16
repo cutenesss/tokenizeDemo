@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleProp,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-  StyleSheet,
-} from 'react-native';
+import {StyleProp, View, ViewStyle, StyleSheet} from 'react-native';
 import {Source} from 'react-native-fast-image';
 import {Input} from '@ui-kitten/components';
 
@@ -45,12 +39,17 @@ const NormalInput = (props: NormalInputProps) => {
     }
   };
 
+  const onPressEye = () => {
+    setShowSecureText(show => !show);
+  };
+
   const renderIconRight = () => {
-    if (showSecureText) {
+    if (secureTextEntry) {
       return (
-        <TouchableOpacity onPress={() => setShowSecureText(show => !show)}>
-          <NormalIcon source={Images.CommonImage.ICON_EYE_WHITE} />
-        </TouchableOpacity>
+        <NormalIcon
+          onPress={onPressEye}
+          source={Images.CommonImage.ICON_EYE_WHITE}
+        />
       );
     } else {
       return <View />;

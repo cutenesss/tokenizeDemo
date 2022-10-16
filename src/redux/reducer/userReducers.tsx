@@ -1,6 +1,6 @@
-import {saveObject, KEY} from '../../../helpers';
+import {saveObject, KEY} from '../../helpers';
 import {USER_ACTION} from '../actions/userAction';
-import {IUser} from '../../../../typings';
+import {IUser} from '../../../typings';
 
 type ActionUserReduxT = {
   payload: IUser;
@@ -12,12 +12,13 @@ const defaultState: IUser = {
   canAccessApi: false,
   email: '',
   roleId: 0,
-  roleName: false,
-  roleType: false,
+  roleName: '',
+  roleType: '',
   is2Faenabled: 0,
   tkxTrading: false,
   userType: '',
   token: '',
+  emailNotificationStatus: false,
 };
 
 export default (state = defaultState, action: ActionUserReduxT) => {
@@ -28,6 +29,7 @@ export default (state = defaultState, action: ActionUserReduxT) => {
         ...state,
         ...action.payload,
       };
+      break;
     default:
       break;
   }

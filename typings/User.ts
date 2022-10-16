@@ -1,8 +1,8 @@
 export interface IBodyLogin {
   email: string;
   password: string;
-  captcha: string;
-  captchaBypass: string;
+  captcha?: string;
+  captchaBypass?: string;
 }
 
 export interface IUser {
