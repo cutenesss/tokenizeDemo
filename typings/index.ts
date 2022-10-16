@@ -1,5 +1,6 @@
 import {ApiResponse} from 'apisauce';
 export * from './User';
+export * from './Market';
 
 export type IResponse<R> = ApiResponse<R> & {
   showToast?: boolean;
@@ -14,4 +15,9 @@ export type IRequest<P> = {
   params?: P;
   showToast?: boolean;
   auth?: boolean;
+};
+
+export type RouteTab = {
+  key: string;
+  title: string;
 };

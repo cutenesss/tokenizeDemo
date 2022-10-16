@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {Button} from '@ui-kitten/components';
 import {colors, moderateScale} from '../../helpers';
 import NormalText from '../NormalText';
@@ -9,18 +9,19 @@ interface ButtonProps {
   onPress?: () => void;
   width?: number;
   backgroundColor?: string;
+  color?: string;
   customStyle?: StyleProp<ViewStyle>;
 }
 
 const NormalButton = (props: ButtonProps) => {
-  const {content, onPress, width, backgroundColor, customStyle} = props;
+  const {content, onPress, width, backgroundColor, customStyle, color} = props;
   return (
     <Button
       onPress={onPress}
       children={
         <NormalText
           content={content || ''}
-          color={colors.color5073F2}
+          color={color || colors.color5073F2}
           category="label"
         />
       }
@@ -33,15 +34,6 @@ const NormalButton = (props: ButtonProps) => {
         customStyle,
       ]}
     />
-    // <TouchableOpacity
-    //   onPress={onPress}
-    //   style={{
-    //     ...styles.button,
-    //     width: width || moderateScale(355),
-    //     backgroundColor: backgroundColor || colors.colorBDCFFF,
-    //   }}>
-    //   <NormalText content={content || ''} />
-    // </TouchableOpacity>
   );
 };
 

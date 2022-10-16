@@ -1,11 +1,24 @@
 import React, {useRef} from 'react';
-import {View, ImageBackground, ScrollView} from 'react-native';
+import {
+  View,
+  ImageBackground,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import {useTranslation} from 'react-i18next';
 import {CheckBox} from '@ui-kitten/components';
 import {useDispatch} from 'react-redux';
 
 import Images from '../../../assets';
-import {colors, moderateScale} from '../../helpers';
+import {
+  colors,
+  get,
+  getObject,
+  KEY,
+  moderateScale,
+  SCREEN_ROUTER_APP,
+  showToast,
+} from '../../helpers';
 import styles from './styles';
 
 import CustomStatusBar from '../../common/CustomStatusBar';
@@ -13,8 +26,10 @@ import NormalIcon from '../../common/NormalIcon';
 import NormalText from '../../common/NormalText';
 import NormalInput from '../../common/NormalInput';
 import NormalButton from '../../common/NormalButton';
-import {IBodyLogin, ILogInResponse, IRequest} from '../../../typings';
-import {postData, URL} from '../../apis';
+import {IBodyLogin, IUser, IRequest} from '../../../typings';
+import {postData, setToken, URL} from '../../apis';
+import {setUserInfo} from '../../redux/reducer/actions/userAction';
+import {reset} from '../../navigation/navigationService';
 
 const LogIn = () => {
   const dispatch = useDispatch();
@@ -22,6 +37,25 @@ const LogIn = () => {
   const email = useRef('tokenize.test@gmail.com');
   const password = useRef('Test#111');
   const isRemembered = useRef(false);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    initialData();
+  }, []);
+
+  const initialData = async () => {
+    try {
+      const token = await get(KEY.TOKEN);
+      const userData = await getObject<IUser>(KEY.USER_DATA);
+      if (token) {
+        setToken(token);
+        reset(SCREEN_ROUTER_APP.TABHOME);
+      }
+      setLoading(false);
+    } catch (error) {
+      // console.log("error", error);
+    }
+  };
 
   const onChangeEmail = (txt: string) => {
     email.current = txt;
@@ -46,78 +80,87 @@ const LogIn = () => {
           captchaBypass: 'yWOEjZMIhY',
         },
       };
-      const response = await postData<IBodyLogin, ILogInResponse>(request);
-
-      console.log('response', JSON.stringify(response.originalError));
-      // if(response?.data){
-
-      // }
+      const response = await postData<IBodyLogin, {data: IUser}>(request);
+      if (response?.data?.data) {
+        dispatch(setUserInfo(response?.data?.data));
+        showToast('Login with account: ' + response.data?.data?.email);
+        reset(SCREEN_ROUTER_APP.TABHOME);
+        setToken(response.data?.data?.token ?? '');
+      }
     } catch (error) {
-      console.log('sssssssssssss', error);
+      // console.log('sssssssssssss', error);
     }
   };
 
-  return (
-    <ImageBackground
-      source={Images.LogInImage.LOG_IN_BACKGROUND}
-      style={styles.container}
-      resizeMode="cover">
-      <CustomStatusBar barStyle={'light-content'} />
-      <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
-        <NormalIcon
-          source={Images.LogInImage.LOGO_APP}
-          width={moderateScale(55)}
-          height={moderateScale(55)}
-          customStyle={styles.alignCenter}
-          marginTop={moderateScale(50)}
-          marginBottom={moderateScale(24)}
-        />
-        <NormalText
-          color={colors.colorWhite}
-          category="h2"
-          content={t('signIn')}
-          customStyle={styles.alignCenter}
-        />
-        <NormalText
-          color={colors.colorD6DFFF}
-          category="p1"
-          content={t('pleaseSignIn')}
-          customStyle={styles.textRemind}
-        />
-        <NormalInput
-          onChangeText={onChangeEmail}
-          icon={Images.CommonImage.ICON_USER_WHITE}
-          placeholder={'Email'}
-          defaultValue={email.current}
-        />
-        <NormalInput
-          onChangeText={onChangePassword}
-          icon={Images.CommonImage.ICON_LOCK_WHITE}
-          placeholder={'Password'}
-          defaultValue={password.current}
-          secureTextEntry
-        />
-        <ViewForgot onChangeRemember={onChangeRemember} />
-        <NormalButton
-          onPress={onSignIn}
-          content={t('signIn').toUpperCase()}
-          customStyle={styles.btn}
-        />
-        <View style={styles.row}>
-          <NormalText
-            content={`${t('noAccount')} `}
-            category="label"
-            color={colors.colorWhite}
+  if (loading) {
+    return (
+      <View style={styles.centerLoading}>
+        <ActivityIndicator />
+      </View>
+    );
+  } else {
+    return (
+      <ImageBackground
+        source={Images.LogInImage.LOG_IN_BACKGROUND}
+        style={styles.container}
+        resizeMode="cover">
+        <CustomStatusBar barStyle={'light-content'} />
+        <ScrollView scrollEnabled={false} showsVerticalScrollIndicator={false}>
+          <NormalIcon
+            source={Images.LogInImage.LOGO_APP}
+            width={moderateScale(55)}
+            height={moderateScale(55)}
+            customStyle={styles.alignCenter}
+            marginTop={moderateScale(50)}
+            marginBottom={moderateScale(24)}
           />
           <NormalText
-            content={t('signUp').toUpperCase()}
-            category="h5"
             color={colors.colorWhite}
+            category="h2"
+            content={t('signIn')}
+            customStyle={styles.alignCenter}
           />
-        </View>
-      </ScrollView>
-    </ImageBackground>
-  );
+          <NormalText
+            color={colors.colorD6DFFF}
+            category="p1"
+            content={t('pleaseSignIn')}
+            customStyle={styles.textRemind}
+          />
+          <NormalInput
+            onChangeText={onChangeEmail}
+            icon={Images.CommonImage.ICON_USER_WHITE}
+            placeholder={'Email'}
+            defaultValue={email.current}
+          />
+          <NormalInput
+            onChangeText={onChangePassword}
+            icon={Images.CommonImage.ICON_LOCK_WHITE}
+            placeholder={'Password'}
+            defaultValue={password.current}
+            secureTextEntry
+          />
+          <ViewForgot onChangeRemember={onChangeRemember} />
+          <NormalButton
+            onPress={onSignIn}
+            content={t('signIn').toUpperCase()}
+            customStyle={styles.btn}
+          />
+          <View style={styles.row}>
+            <NormalText
+              content={`${t('noAccount')} `}
+              category="label"
+              color={colors.colorWhite}
+            />
+            <NormalText
+              content={t('signUp').toUpperCase()}
+              category="h5"
+              color={colors.colorWhite}
+            />
+          </View>
+        </ScrollView>
+      </ImageBackground>
+    );
+  }
 };
 
 const ViewForgot = ({

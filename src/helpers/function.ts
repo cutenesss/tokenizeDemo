@@ -20,3 +20,15 @@ export const showMessageError = (responseError: Partial<IResponseError>) => {
     Toast.hide(toast);
   }, 1000);
 };
+
+export const showToast = (message: string) => {
+  Toast.show(message, {
+    duration: Toast.durations.SHORT,
+    position: Toast.positions.BOTTOM,
+    shadow: false,
+    animation: true,
+    hideOnPress: true,
+    delay: 0,
+    containerStyle: {alignItems: 'center', justifyContent: 'center'},
+  });
+};

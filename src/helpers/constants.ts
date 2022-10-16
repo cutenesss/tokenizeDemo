@@ -1,16 +1,10 @@
 export const SCREEN_ROUTER_APP = {
   LOG_IN: 'LOG_IN',
-  HOME: 'HOME',
+  TABHOME: 'TABHOME',
 };
 
 export const STATUS = {
-  SUCCESS: 200,
-  CREATED: 201,
-  NO_CONTENT: 204,
-  REDIRECTED: 301,
-  FAILED: 400,
-  UNAUTHORIZED: 401,
-  BODY_FAIL: 500,
+  SUCCESS: 'success',
 };
 
 export const TypeSession = {

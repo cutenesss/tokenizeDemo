@@ -4,12 +4,12 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {navigationRef} from './navigationService';
 import {SCREEN_ROUTER_APP} from '../helpers';
 
-import Home from '../screen/Home';
+import TabHome from '../screen/TabHome';
 import LogIn from '../screen/LogIn';
 
 const RootStack = createNativeStackNavigator();
 
-const {HOME, LOG_IN} = SCREEN_ROUTER_APP;
+const {TABHOME, LOG_IN} = SCREEN_ROUTER_APP;
 
 const mainScreen = [
   {
@@ -17,8 +17,8 @@ const mainScreen = [
     component: LogIn,
   },
   {
-    name: HOME,
-    component: Home,
+    name: TABHOME,
+    component: TabHome,
   },
 ];
 

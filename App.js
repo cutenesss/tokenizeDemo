@@ -5,7 +5,6 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {ApplicationProvider} from '@ui-kitten/components';
 import * as eva from '@eva-design/eva';
 
-import theme from './theme.json';
 import mapping from './mapping.json';
 import configureStore from './src/redux/store';
 import AppNavigator from './src/navigation';
@@ -22,7 +21,7 @@ const App = () => {
       <SafeAreaProvider>
         <ApplicationProvider
           {...eva}
-          theme={{...eva.light, ...theme}}
+          theme={{...eva.light}}
           customMapping={mapping}>
           <AppNavigator />
         </ApplicationProvider>
